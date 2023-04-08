@@ -1,5 +1,9 @@
 package task_2;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Main {
     /*Завдання 2
     Напишіть програму, що виводить в консоль рядок, що складається
@@ -24,6 +28,45 @@ public class Main {
     Потік D викликає метод number(), щоб вивести наступне число з черги,
     якщо є таке число для виведення.*/
     public static void main(String[] args) {
+       Scanner scanner = new Scanner(System.in);
+       System.out.print("Enter number: ");
+       int number = scanner.nextInt();
+
+        FizzBuzzPrinter fizzBuzzPrinter = new FizzBuzzPrinter(number);
+
+
+        Thread threadA = new Thread(() -> {
+            fizzBuzzPrinter.fizz();
+        });
+        Thread threadB = new Thread(() -> {
+            fizzBuzzPrinter.buzz();
+        });
+        Thread threadC = new Thread(() -> {
+            fizzBuzzPrinter.fizzbuzz();
+        });
+        Thread threadD = new Thread(() -> {
+            fizzBuzzPrinter.number();
+        });
+
+        threadA.start();
+        threadB.start();
+        threadC.start();
+
+        try{
+            threadA.join();
+            threadB.join();
+            threadC.join();
+        }catch(InterruptedException ex){
+            ex.printStackTrace();
+        }
+
+        threadD.start();//запускаю потік Д останнім, бо він в кінці виводить
+                        // числа, які не підійшли жодному з потоків
+        try{
+            threadD.join();
+        }catch(InterruptedException ex){
+            ex.printStackTrace();
+        }
 
     }
 }
