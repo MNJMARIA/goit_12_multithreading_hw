@@ -1,7 +1,5 @@
 package task_2;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -34,39 +32,19 @@ public class Main {
 
         FizzBuzzPrinter fizzBuzzPrinter = new FizzBuzzPrinter(number);
 
+        //Метод submit() додає задачу до черги пулу потоків і повертає майбутнє значення,
+        // яке можна використовувати для отримання результату виконання задачі в майбутньому.
+        // Додаємо задачі до черги пулу потоків
+        fizzBuzzPrinter.executor.submit(() -> fizzBuzzPrinter.fizz());
+        fizzBuzzPrinter.executor.submit(() -> fizzBuzzPrinter.buzz());
+        fizzBuzzPrinter.executor.submit(() -> fizzBuzzPrinter.fizzbuzz());
+        fizzBuzzPrinter.executor.submit(() -> fizzBuzzPrinter.number());
 
-        Thread threadA = new Thread(() -> {
-            fizzBuzzPrinter.fizz();
-        });
-        Thread threadB = new Thread(() -> {
-            fizzBuzzPrinter.buzz();
-        });
-        Thread threadC = new Thread(() -> {
-            fizzBuzzPrinter.fizzbuzz();
-        });
-        Thread threadD = new Thread(() -> {
-            fizzBuzzPrinter.number();
-        });
+        // Викликаємо метод shutdown(), щоб зупинити пул потоків після того, як він виконає всі задачі
+        fizzBuzzPrinter.executor.shutdown();
 
-        threadA.start();
-        threadB.start();
-        threadC.start();
-
-        try{
-            threadA.join();
-            threadB.join();
-            threadC.join();
-        }catch(InterruptedException ex){
-            ex.printStackTrace();
-        }
-
-        threadD.start();//запускаю потік Д останнім, бо він в кінці виводить
-                        // числа, які не підійшли жодному з потоків
-        try{
-            threadD.join();
-        }catch(InterruptedException ex){
-            ex.printStackTrace();
-        }
-
+        // Виводимо результат черги на екран
+        fizzBuzzPrinter.printQueue();
+        scanner.close();
     }
 }
