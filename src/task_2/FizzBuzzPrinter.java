@@ -64,5 +64,4 @@ public class FizzBuzzPrinter{
         queue.drainTo(list);
         System.out.print(String.join(", ", list));
     }*/
-
 }
