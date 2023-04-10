@@ -1,6 +1,8 @@
 package task_2;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     /*Завдання 2
@@ -26,25 +28,28 @@ public class Main {
     Потік D викликає метод number(), щоб вивести наступне число з черги,
     якщо є таке число для виведення.*/
     public static void main(String[] args) {
-       Scanner scanner = new Scanner(System.in);
-       System.out.print("Enter number: ");
-       int number = scanner.nextInt();
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Enter number: ");
+            int number = scanner.nextInt();
 
         FizzBuzzPrinter fizzBuzzPrinter = new FizzBuzzPrinter(number);
-
+        ExecutorService executor = Executors.newFixedThreadPool(4);
         //Метод submit() додає задачу до черги пулу потоків і повертає майбутнє значення,
         // яке можна використовувати для отримання результату виконання задачі в майбутньому.
         // Додаємо задачі до черги пулу потоків
-        fizzBuzzPrinter.executor.submit(() -> fizzBuzzPrinter.fizz());
-        fizzBuzzPrinter.executor.submit(() -> fizzBuzzPrinter.buzz());
-        fizzBuzzPrinter.executor.submit(() -> fizzBuzzPrinter.fizzbuzz());
-        fizzBuzzPrinter.executor.submit(() -> fizzBuzzPrinter.number());
+
+        executor.submit(() -> fizzBuzzPrinter.fizz());
+        executor.submit(() -> fizzBuzzPrinter.buzz());
+        executor.submit(() -> fizzBuzzPrinter.fizzbuzz());
+        executor.submit(() -> fizzBuzzPrinter.number());
+
 
         // Викликаємо метод shutdown(), щоб зупинити пул потоків після того, як він виконає всі задачі
-        fizzBuzzPrinter.executor.shutdown();
+        executor.shutdown();
+        //fizzBuzzPrinter.printResultOfFizzBuzz();
 
-        // Виводимо результат черги на екран
-        fizzBuzzPrinter.printQueue();
-        scanner.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
