@@ -33,21 +33,27 @@ public class Main {
             int number = scanner.nextInt();
 
         FizzBuzzPrinter fizzBuzzPrinter = new FizzBuzzPrinter(number);
-        ExecutorService executor = Executors.newFixedThreadPool(4);
-        //Метод submit() додає задачу до черги пулу потоків і повертає майбутнє значення,
-        // яке можна використовувати для отримання результату виконання задачі в майбутньому.
-        // Додаємо задачі до черги пулу потоків
+            Thread threadA = new Thread(()->{
+                fizzBuzzPrinter.fizz();
+            });
+            Thread threadB = new Thread(()->{
+                fizzBuzzPrinter.buzz();
+            });
+            Thread threadC = new Thread(()->{
+                fizzBuzzPrinter.fizzbuzz();
+            });
+            Thread threadD = new Thread(()->{
+                fizzBuzzPrinter.number();
+            });
 
-        executor.submit(() -> fizzBuzzPrinter.fizz());
-        executor.submit(() -> fizzBuzzPrinter.buzz());
-        executor.submit(() -> fizzBuzzPrinter.fizzbuzz());
-        executor.submit(() -> fizzBuzzPrinter.number());
-
-
-        // Викликаємо метод shutdown(), щоб зупинити пул потоків після того, як він виконає всі задачі
-        executor.shutdown();
-        //fizzBuzzPrinter.printResultOfFizzBuzz();
-
+            threadA.start();
+            threadB.start();
+            threadC.start();
+            threadD.start();
+            threadA.join();
+            threadB.join();
+            threadC.join();
+            threadD.join();
         } catch (Exception e) {
             e.printStackTrace();
         }
