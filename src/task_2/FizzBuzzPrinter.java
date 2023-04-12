@@ -7,7 +7,6 @@ public class FizzBuzzPrinter{
     private BlockingQueue<String> queueA = new LinkedBlockingQueue<>();
     private BlockingQueue<String> queueB = new LinkedBlockingQueue<>();
     private BlockingQueue<String> queueC = new LinkedBlockingQueue<>();
-    private BlockingQueue<String> queueD = new LinkedBlockingQueue<>();
 
     public FizzBuzzPrinter() {}
     public FizzBuzzPrinter(int n) {
