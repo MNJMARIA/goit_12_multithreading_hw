@@ -73,4 +73,32 @@ public class FizzBuzzPrinter{
             ex.printStackTrace();
         }
     }
+
+    //АБО
+    /*
+    private int n;
+    public FizzBuzzPrinter() {}
+    public FizzBuzzPrinter(int n) {
+        this.n = n;
+    }
+
+    public void number()  {
+        int i = 1;
+        while (i <= n) {
+            String result = null;
+            if (i % 3 == 0 && i % 5 == 0) {
+                result = "fizzbuzz";
+            } else if (i % 3 == 0) {
+                result = "fizz";
+            } else if (i % 5 == 0) {
+                result = "buzz";
+            } else {
+                result = Integer.toString(i);
+            }
+
+            System.out.print(result + " ");
+
+            i++;
+        }
+    }*/
 }

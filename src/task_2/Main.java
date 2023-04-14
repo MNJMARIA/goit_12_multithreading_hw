@@ -58,4 +58,23 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+    //АБО
+    /*
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Enter number: ");
+            int number = scanner.nextInt();
+
+        FizzBuzzPrinter fizzBuzzPrinter = new FizzBuzzPrinter(number);
+            Thread threadD = new Thread(()->{
+                fizzBuzzPrinter.number();
+            });
+            threadD.start();
+            threadD.interrupt();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}*/
 }
